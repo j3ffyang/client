@@ -30,8 +30,9 @@ export const makeChannelInfo: I.RecordFactory<Types._ChannelInfo> = I.Record({
 })
 
 export const makeMemberInfo: I.RecordFactory<Types._MemberInfo> = I.Record({
-  active: true,
   fullName: '',
+  isDeleted: false,
+  isReset: false,
   type: 'reader',
   username: '',
 })
@@ -167,7 +168,7 @@ const userIsActiveInTeamHelper = (
   }
 
   const member = members.get(username)
-  return member && member.active
+  return member && !(member.isDeleted || member.isReset)
 }
 
 const isTeamWithChosenChannels = (state: TypedState, teamname: string): boolean =>
